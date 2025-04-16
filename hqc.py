@@ -108,7 +108,7 @@ class HQC:
 
         for i in range(r):
             j = i
-            while m[j][i] == 0 and j < r:
+            while j < r and m[j][i] == 0:
                 j += 1
             if j >= r:
                 continue

@@ -151,7 +151,7 @@ def hqc_print_rsp(iut, katnum=10):
 
 if (__name__ == "__main__"):
 
-	#	test vectors
+    #   test vectors
 
     katnum = 100
 
