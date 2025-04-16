@@ -75,13 +75,13 @@ def test_rs(iut, w):
         c1[i]   ^= e[i]
     #print('c1:', c1.hex())
 
-
     #   decode the vector with error
     m1  =   iut.rs_decode(c1)
     #print('m1:', m1.hex())
 
     ok  =   m0 == m1
     return ok
+
 
 #   Test Reed-Muller
 
