@@ -1,5 +1,5 @@
 test:
-	grep `python3 hqc.py | sha256sum | colrm 65` kat/*
+	python3 unit_tests.py
 
 clean:
 	$(RM) -f *.pyc *.cprof */*.pyc *.rsp *.log

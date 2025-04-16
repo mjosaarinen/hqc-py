@@ -24,25 +24,34 @@ One can, of course, expand the secret key from a shorter seed.
 #   Code
 
 This is a single-file implementation in [hqc.py](hqc.py), which also
-includes a KAT generator (at the end of the file). The code only needs
+includes a simple KAT generator (at the end of the file). The code only needs
 SHAKE256 as a dependency from pycryptodome (`pip3 install pycryptodome`).
 
 
-I've include sha256 hashes of the test vectors for HQC-128, HQC-192,
-HQC-256 only as those are very large. The `Makefile` contains a simple
-check:
+#	KATs and Some Unit Tests
+
+There is an unit test file [unit_tests.py](unit_tests.py) that runs
+KAT tests and also checks that the Reed-Solomon and Reed-Muller codes
+are running fine (i.e. actually correcting errors).
+
+The `Makefile` contains starts the check:
 
 ```
 $ make
-grep `python3 hqc.py | sha256sum | colrm 65` kat/*
-kat/hqc-kat-hash.txt:2be3afb1efb98ce58d719e19824f1a1fcb53fedb6ca8e16bc34afa53ac0528c0  hqc-128.rsp.100
+python3 unit_tests.py
+[TEST] hqc-128 KAT 100 .................................................................................................... [END]
+[PASS] hqc-128 KAT 100 2be3afb1efb98ce58d719e19824f1a1fcb53fedb6ca8e16bc34afa53ac0528c0
+[TEST] hqc-192 KAT 100 .................................................................................................... [END]
+[PASS] hqc-192 KAT 100 a77dd028b01a6554eebe5530fbccf4891e788c50a7efae9156e7ebc01bbea20a
+[TEST] hqc-256 KAT 100 .................................................................................................... [END]
+[PASS] hqc-256 KAT 100 a63d941b042b3992dc9d19f9b901548bfcd7e5b9cb92bb87724ccfbbabee8917
+RM hqc-128  p= 0.300  w= 5299  d= 0  True
+RM hqc-128  p= 0.310  w= 5475  d= 0  True
+(.. etc ...)
+RS hqc-256  w= 29  True
+RS hqc-256  w= 30  False
+[PASS] hqc-256 RS dist 29 >= 29.
 ```
-To change the test target (HQC-192 etc), change the last line in `hqc.py`
-
-I've also unit-tested the decoders with an artificially large number of
-errors (Reed-Solomun up to "delta" errors, etc.), and those should be
-working fine. The decoding algorithms are, of course, very elementary ones
-in this implementation, and no effort is made for constant time, etc.
 
 ** EDUCATIONAL USE ONLY. ABSOLUTELY NO WARRANTY WHATSOEVER **
 

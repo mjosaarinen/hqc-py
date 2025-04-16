@@ -8,6 +8,7 @@ from Crypto.Hash import SHAKE256
 class HQC:
 
     def __init__(self, sec, n, n1, n2, w, w_e, w_r, delta):
+        self.alg_id     =   f'hqc-{sec}'
         self.sec        =   sec
         self.sec_sz     =   self.sec // 8
         self.n          =   n
@@ -107,7 +108,7 @@ class HQC:
 
         for i in range(r):
             j = i
-            while m[i][j] == 0 and j < r:
+            while m[j][i] == 0 and j < r:
                 j += 1
             if j >= r:
                 continue
@@ -442,6 +443,8 @@ HQC_192 = HQC(  sec = 192,  n = 35851,  n1  = 56,   n2  = 640,
 HQC_256 = HQC(  sec = 256,  n = 57637,  n1  = 90,   n2  = 640,
                 w   = 131,  w_e = 149,  w_r = 149,  delta = 29 )
 
+HQC_ALL = [ HQC_128, HQC_192, HQC_256 ]
+
 #   === KAT Generator fot testing purposes
 
 if (__name__ == "__main__"):
@@ -473,6 +476,8 @@ if (__name__ == "__main__"):
             nist_kat('ss', ss)
 
             s2 = iut.kem_dec(ct, sk)
+            if s2 != ss:
+                print('ERROR')
             print()
 
     #   our test case
