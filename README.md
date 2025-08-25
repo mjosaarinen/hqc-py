@@ -16,9 +16,7 @@ from [pqc-hqc.org](https://pqc-hqc.org/) and the test vectors
 of [HQC implementation](https://gitlab.com/pqc-hqc/hqc/) v5.0.0.
 
 Here are the actual public key, secret key, ciphertext, and shared secret
-sizes in bytes (_matches the reference implementation but for some
-reason, not the ciphertext size in Table 7 in the current documentation._)
-One can, of course, expand the secret key from a shorter seed.
+sizes in bytes. One can, of course, expand the secret key from a shorter seed.
 
 | Variant |  PK  |  SK  |   CT  | SS |
 |---------|------|------|-------|----|
