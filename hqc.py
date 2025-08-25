@@ -5,34 +5,6 @@
 
 from Crypto.Hash import SHAKE256, SHA3_256, SHA3_512
 
-def dbg_dump(lab='', x=b''):
-    l = len(x)
-    print(f'{lab} = ({l})')
-    for i in range(0, l, 32):
-        print(f'{lab}[{i:06x}]: {x[i:i+32].hex()}')
-
-def dbg_hex(lab='', x=b''):
-    l = len(x)
-    print(f'{lab}[{l}] =', x.hex().upper())
-
-def dbg_chk(lab='', data=b''):
-    def crc32byte(x, c):
-        x ^= c << 24
-        for _ in range(8):
-            x <<= 1
-            if x & 0x100000000:
-                x ^= 0x104C11DB7
-        return x
-    x = 0
-    for y in data:
-        x = crc32byte(x, y)
-    l = len(data)
-    while l > 0:
-        x = crc32byte(x, l & 0xFF)
-        l >>= 8
-    x = (~x) & 0xFFFFFFFF;
-    print(f'{lab}: {x:08X} ({len(data)})')
-
 class HQC:
 
     def __init__(self, lev, n, n1, n2, w, w_e, w_r, delta):
@@ -639,12 +611,6 @@ if (__name__ == "__main__"):
             if s2 != ss:
                 print('ERROR -- decryption failure')
             print()
-
-            c2  = bytearray(ct)
-            c2[0] ^= 1
-
-            s2 = iut.kem_decaps(sk, c2)
-            dbg_hex('s2', s2)
 
     #   our test case
     hqc_print_rsp(HQC_1)
